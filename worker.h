@@ -1,26 +1,33 @@
-#include <iostream>
+// Copyright 2015 <Sergey Fedotov>
+#pragma once
+#include <string>
 using namespace std;
+
 class Worker
 {
-	char name[64]; 
+	string name; 
 	int age; 	
 	int salary; 
 	int exp; 
 	bool goodworker; 	
 public:
 	Worker();
-	Worker(char* name, int age, int salary, int exp,bool goodworker);
-	Worker(char* name, int age);
+	Worker(const string& name, const int& age, const int& salary, const int& exp, const bool& goodworker);
+	Worker(const string& name, const int& age);
+	Worker(const Worker& buf);
 	
 	~Worker();
 	
-	void reworker(char* name, int age, int salary,int exp,bool goodworker);
-	void rename(char* name);
-	void reage(int age);
-	void resalary(int salary);
-	char *getname();
+	void setworker(const string& name, const int& age, const int& salary, const int& exp, const bool& goodworker);
+	void setname(const string& name);
+	void setage(const int& age);
+	void setsalary(const int& salary);
+
+	const string& getname();
+	const int& getage();
+	const int& getsalary();
 	
-	friend ostream & operator <<(ostream& stream, Worker& buf);
-	Worker operator =(Worker& buf);
-	bool Worker::operator==( Worker& buf);
+	friend ostream & operator <<(ostream& stream, const Worker& buf);
+	const Worker& operator =(const Worker& buf);
+	const bool& operator==(const Worker& buf);
 };

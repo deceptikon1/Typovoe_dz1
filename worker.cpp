@@ -1,27 +1,29 @@
+// Copyright 2015 <Sergey Fedotov>
 #pragma warning(disable:4996)
 #include "worker.h"
+#include <string>
 
 Worker::Worker()
 {
-	char* name = 0;
+	this->name = string();
 	int age = 0;
 	int exp = 0;
 	int salary = 0;
 	bool goodworker = false;
 }
 
-Worker::Worker(char name[64], int age, int exp, int salary, bool goodworker)
+Worker::Worker(const string& name, const int& age, const int& exp, const int& salary, const bool& goodworker)
 {
-	strcpy(this->name, name);
+	this->name = name;
 	this->age = age;
 	this->exp = exp;
 	this->salary = salary;
 	this->goodworker = goodworker;
 }
 
-Worker::Worker(char name[64], int age)
+Worker::Worker(const string& name, const int& age)
 {
-	strcpy(this->name, name);
+	this->name = name;
 	this->age = age;
 	exp = 0;
 	salary = 0;
@@ -31,37 +33,71 @@ Worker::Worker(char name[64], int age)
 
 Worker::~Worker()
 {
-	char* name = 0;
+	this->name = string();
 	int age = 0;
 	int exp = 0;
 	int salary = 0;
 	bool goodworker = false;
 }
 
-void Worker::reworker(char name[64],int age,int exp,int salary,bool goodworker)
+Worker::Worker(const Worker& buf)
 {
-	strcpy(this->name, name);
+	this->name = buf.name;
+	this->age = buf.age;
+	this->exp = buf.exp;
+	this->salary = buf.salary;
+	this->goodworker = buf.goodworker;
+}
+
+void Worker::setworker(const string& name, const int& age, const int& exp, const int& salary, const bool& goodworker)
+{
+	this->name = name;
 	this->age = age;
 	this->exp = exp;
 	this->salary = salary;
 	this->goodworker = goodworker;
 }
 
-char* Worker::getname()
+void Worker::setname(const string& name)
+{
+	this->name = name;
+}
+
+void Worker::setage(const int& age)
+{
+	this->age = age;
+}
+
+void Worker::setsalary(const int& salary)
+{
+	this->salary = salary;
+}
+
+const int& Worker::getage()
+{
+	return age;
+}
+
+const int& Worker::getsalary()
+{
+	return salary;
+}
+
+const string& Worker::getname()
 {
 	return name;
 }
 
-Worker Worker::operator =(Worker & buf)
+const Worker& Worker::operator =(const Worker & buf)
 {
-	strcpy(name, buf.name);
+	name = buf.name;
 	age = buf.age;
 	salary = buf.salary;
 	goodworker = buf.goodworker;
 	return *this;
 }
 
- ostream & operator <<(ostream & stream, Worker& buf)
+ostream & operator <<(ostream & stream, const Worker& buf)
 {
 	stream << "Работник " << buf.name << ",возраст " << buf.age << ",зарплата " << buf.exp << ",стаж " << buf.salary << ",качество работы ";
 	if (buf.goodworker)
@@ -70,7 +106,7 @@ Worker Worker::operator =(Worker & buf)
 	return stream;
 }
 
- bool Worker::operator==( Worker & buf)
+const bool& Worker::operator ==(const Worker & buf)
  {
 	 if (this->name == buf.name && this->age == buf.age && this->salary == buf.salary &&
 		 this->exp == buf.exp && this->goodworker == buf.goodworker)

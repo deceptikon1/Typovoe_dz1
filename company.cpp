@@ -1,74 +1,155 @@
+// Copyright 2015 <Sergey Fedotov>
 #pragma warning(disable:4996)
-#include <list>
 #include "company.h"
-
+#include "myexception.cpp"
 
 company::company() : list()
 {
-	char *name = 0;
+	string name = string();
 	int workers = 0;
 	bool gooddepart = false;
 }
 
-company::company(char name[64], bool gooddepart) :list()
+company::company(const string& name, const bool& gooddepart) :list()
 {
-	strcpy(this->name,name);
+	this->name = name;
 	int workers = 0;
 	this->gooddepart = gooddepart;
+}
+
+company::company(const company& buf)
+{
+	this->name = buf.name;
+	this->gooddepart = buf.gooddepart;
 }
 
 company::~company()
 {
-	char *name = 0;
+	string name = string();
 	int workers = 0;
 	bool gooddepart = false;
 }
 
-void company::addworker(Worker & buf)
+void company::addworker(const Worker & buf)
 {
-	workers++;
-	list.insert(list.end(), buf);
+	if (!this->hasworker(buf))
+	{
+		workers++;
+		list.insert(list.end(), buf);
+	}
+	else
+		throw myexception("Same worker has already exist");
 }
 
-void company::delworker(char * name)
+void company::delworker(const Worker& wrk)
 {
-	std::list<Worker>::iterator iter = this->find(name);
-	iter == list.end(); 
-	list.erase(iter);
-	workers--;
+	if (!this->hasworker(wrk))
+	{
+		throw myexception("Error - worker not found");
+	}
+	else
+	{
+		Worker iter = this->find(wrk);
+		list.remove(iter);
+		workers--;
+	}
 }
 
-void company::recompany(char name[64],bool gooddepart)
+
+void company::delworkernum(const int& q)
 {
-	strcpy(this->name, name);
+
+	if ((q > workers) || (q < 1))
+	{
+		throw myexception("Error - worker not found");
+	}
+	else
+	{
+		Worker iter = this->getworker(q);
+		list.remove(iter);
+		workers--;
+	}
+}
+
+void company::setcompany(const string& name,const bool& gooddepart)
+{
+	this->name = name;
 	this->gooddepart = gooddepart;
 }
 
-char* company::getdepartname()
+void company::setdepartname(const string& name)
+{
+	this->name = name;
+}
+
+void company::setgooddepart(const bool& gooddepart)
+{
+	this->gooddepart = gooddepart;
+}
+
+const string& company::getdepartname()
 {
 	return name;
 }
 
-int company::getworkersnum()
+const int& company::getworkersnum()
 {
 	return workers;
 }
 
-std::list<Worker>::iterator company::find(char* wrk)
+const bool& company::getgooddepart()
+{
+	return gooddepart;
+}
+
+const Worker& company::getworker(const int& q)
+{
+
+	std::list<Worker>::iterator iter = list.begin();
+	if ((q > workers) || (q < 1))
+	{
+		throw myexception("Error - worker not found");
+	}
+	else
+	{
+		for (int i = 0; i < q - 1; i++)
+			iter++;
+		return *iter;
+	}
+}
+
+const Worker& company::find(const Worker& wrk)
 {
 	std::list<Worker>::iterator iter = list.begin();
 		while (iter != list.end())
 		{
-			if (!strcmp(iter->getname(),wrk))
+			if (*iter == wrk)
 			{
-				return iter;
+				return *iter;
 			}
 			iter++;
 		}
-		return list.end();
+		return *list.end();
+
 }
 
-company & operator +(Worker & buf1, Worker & buf2)
+const bool company::hasworker(const Worker& wrk)
+{
+	std::list<Worker>::iterator iter = list.begin();
+	while (iter != list.end())
+	{
+		if (*iter == wrk)
+		{
+			return true;
+		}
+		iter++;
+	}
+	return false;
+}
+
+
+
+company & operator +(const Worker & buf1, const Worker & buf2)
 {
 	company *one;
 	one = new company("New company ",true);
@@ -78,22 +159,37 @@ company & operator +(Worker & buf1, Worker & buf2)
 	return *one;
 }
 
-company & operator +(company & buf1, Worker & buf2)
+company & operator +(company & buf1, const Worker & buf2)
 {
 	buf1.addworker(buf2);
 	return buf1;
 }
 
-ostream & operator <<(ostream & stream, company& str) 
+ostream & operator <<(ostream & stream,company& str) 
 {
 	stream << "Отдел " << str.name<< ", качество работы - ";
 	if (str.gooddepart)
 		stream << "хорошее" << endl<<endl;
 	else stream << "плохое" << endl<<endl;
 
-	for (list<Worker>::iterator i = str.list.begin(); i != str.list.end(); i++)
+	for ( list<Worker>::iterator i = str.list.begin(); i != str.list.end(); i++)
 	{
 		stream<<*i;
 	}
 	return stream;
+}
+
+const bool& company::operator ==(const company& buf)
+{
+	if (this->name == buf.name && this->gooddepart == buf.gooddepart)
+		return true;
+	else
+		return false;
+}
+
+const company& company::operator =(const company& buf)
+{
+	name = buf.name;
+	gooddepart = buf.gooddepart;
+	return *this;
 }
