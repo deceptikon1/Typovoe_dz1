@@ -3,14 +3,13 @@
 
 #include <string>
 #include <list>
-#include "libs/worker.h"
+#include "worker.h"
 
 class company {
     std::list < Worker > list;
     string name;
     int workers;
     bool gooddepart;
-
  public:
     company();
     company(const string& name, const bool& gooddepart);
