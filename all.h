@@ -6,5 +6,5 @@
 #include <list>
 #include <iostream>
 #include <exception>
-#include "libs/company.h"
-#include "libs/worker.h"
+#include "./company.h"
+#include "./worker.h"

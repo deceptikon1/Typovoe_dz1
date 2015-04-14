@@ -1,7 +1,7 @@
 // Copyright 2015 <Sergey Fedotov>
 #pragma warning(disable:4996)
 #include <string>
-#include "libs/all.h"
+#include "./all.h"
 
 Worker::Worker() {
     this->name = string();

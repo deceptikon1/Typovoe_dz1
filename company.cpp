@@ -2,7 +2,7 @@
 #pragma warning(disable:4996)
 #include <string>
 #include <list>
-#include "libs/all.h"
+#include "./all.h"
 #include "myexception.cpp"
 
 company::company() : list() {
@@ -127,9 +127,9 @@ company & operator +(const Worker & buf1, const Worker & buf2) {
     return *one;
 }
 
-company & operator +(company & buf1, const Worker & buf2) {
-    buf1.addworker(buf2);
-    return buf1;
+company & company::operator +(const Worker & buf2) {
+    this->addworker(buf2);
+    return *this;
 }
 
 ostream & operator <<(ostream & streams, company& str)  {

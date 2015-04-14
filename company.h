@@ -3,7 +3,7 @@
 
 #include <string>
 #include <list>
-#include "libs/worker.h"
+#include "./worker.h"
 
 class company {
     std::list < Worker > list;
@@ -36,7 +36,7 @@ class company {
     const Worker& find(const Worker& wrk);
 
     friend company & operator +(const Worker& buf1, const  Worker& buf2);
-    friend company & operator +(company& buf1, const Worker& buf2);
+    company & operator +(const Worker& buf2);
     const company& operator =(const company& buf);
     const bool& operator ==(const company& buf);
     friend ostream & operator <<(ostream & stream, company& buf);

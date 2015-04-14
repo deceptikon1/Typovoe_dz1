@@ -1,7 +1,6 @@
 // Copyright 2015 <Sergey Fedotov>
 #pragma warning(disable:4996)
-#include "libs/all.h"
-
+#include "./all.h"
 
 
 int main() {
@@ -13,16 +12,16 @@ int main() {
         one.addworker(Worker("Susan", 19, 30000, 1, true));
         one.addworker(Worker("Samuel", 27, 6700, 5, true));
         one.addworker(Worker("Ivan", 30, 6300, 10, true));
-        // str.addworker(Worker("Victor", 27, 6700, 5, true));
+        // one.addworker(Worker("Victor", 27, 6700, 5, true));
         // - try exeption if you want
 
         one.delworkernum(3);
-        // str.delworkernum(10);// - try exeption if you want
+        // one.delworkernum(10);// - try exeption if you want
 
         cout << one;
 
         one.delworker(Worker("Samuel", 27, 6700, 5, true));
-        // str.delworker(Worker("Jorge", 27, 6700, 5, true));
+         // one.delworker(Worker("Jorge", 27, 6700, 5, true));
         // - try exeption if you want
         one.setcompany("KGB", false);
 
