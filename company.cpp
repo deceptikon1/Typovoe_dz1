@@ -95,16 +95,7 @@ const bool company::hasworker(const Worker& wrk) {
 }
 
 
-
-company & operator +(const Worker & buf1, const Worker & buf2) {
-    company *one;
-    one = new company("New company ", true);
-    one->addworker(buf1);
-    one->addworker(buf2);
-    return *one;
-}
-
-const company & company::operator +(const Worker & buf2) {
+company & company::operator +(const Worker & buf2) {
     this->addworker(buf2);
     return *this;
 }

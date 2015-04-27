@@ -30,7 +30,9 @@ int main() {
         cout << "Workers number - "<< one.getworkersnum();
          cout << endl << endl;
 
-        cout << Worker("John", 123, 321, 555, true) +
+         company two("Qwerty", true);
+
+         cout<< two + Worker("John", 123, 321, 555, true) +
             Worker("Sam", 50, 100, 222, false) +
             Worker("Greg", 50, 100, 222, false);
         _getch();
