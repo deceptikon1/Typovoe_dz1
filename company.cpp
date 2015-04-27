@@ -22,39 +22,33 @@ company::company(const company& buf) {
     this->gooddepart = buf.gooddepart;
 }
 
-company::~company() {
-    string name = string();
-    int workers = 0;
-    bool gooddepart = false;
-}
+company::~company() {}
 
 void company::addworker(const Worker & buf) {
     if (!this->hasworker(buf)) {
-    workers++;
-     list.insert(list.end(), buf);
+     list.push_back(buf);
     } else {
-      throw myexception("Same worker has already exist");
+      throw exist(buf);
      }
 }
 
 void company::delworker(const Worker& wrk) {
     if (!this->hasworker(wrk)) {
-        throw myexception("Error - worker not found");
+        throw notfound(wrk);
     } else {
-        Worker iter = this->find(wrk);
-        list.remove(iter);
-        workers--;
+        std::list<Worker>::iterator iter =
+             std::find(list.begin(), list.end(), wrk);
+        list.erase(iter);
     }
 }
 
 
-void company::delworkernum(const int& q) {
-    if ((q > workers) || (q < 1)) {
-        throw myexception("Error - worker not found");
+void company::delworkernum(int q) {
+    if ((q > list.size()) || (q < 0)) {
+        throw numnotfound(q);
     } else {
         Worker iter = this->getworker(q);
         list.remove(iter);
-        workers--;
     }
 }
 
@@ -75,45 +69,29 @@ const string& company::getdepartname() {
     return name;
 }
 
-const int& company::getworkersnum() {
-    return workers;
+
+int company::getworkersnum()const {
+    return list.size();
 }
 
 const bool& company::getgooddepart() {
     return gooddepart;
 }
 
-const Worker& company::getworker(const int& q) {
+const Worker& company::getworker(int q) {
     std::list<Worker>::iterator iter = list.begin();
-    if ((q > workers) || (q < 1)) {
-        throw myexception("Error - worker not found");
+    if ((q > list.size()) || (q < 0)) {
+        throw numnotfound(q);
     } else {
-        for (int i = 0; i < q - 1; i++)
-            iter++;
-        return *iter;
+        std::advance(iter, q);
+           return *iter;
     }
 }
 
-const Worker& company::find(const Worker& wrk) {
-    std::list<Worker>::iterator iter = list.begin();
-        while (iter != list.end()) {
-            if (*iter == wrk) {
-                return *iter;
-            }
-            iter++;
-        }
-        return *list.end();
-}
 
 const bool company::hasworker(const Worker& wrk) {
-    std::list<Worker>::iterator iter = list.begin();
-    while (iter != list.end()) {
-        if (*iter == wrk) {
-            return true;
-        }
-        iter++;
-    }
-    return false;
+    std::list<Worker>::iterator iter = std::find(list.begin(), list.end(), wrk);
+    return (iter != list.end()) ? true : false;
 }
 
 
@@ -123,23 +101,22 @@ company & operator +(const Worker & buf1, const Worker & buf2) {
     one = new company("New company ", true);
     one->addworker(buf1);
     one->addworker(buf2);
-
     return *one;
 }
 
-company & company::operator +(const Worker & buf2) {
+const company & company::operator +(const Worker & buf2) {
     this->addworker(buf2);
     return *this;
 }
 
-ostream & operator <<(ostream & streams, company& str)  {
+ostream & operator <<(ostream & streams, const company& str)  {
     streams << "Depart " << str.name<< ", work quality - ";
     if (str.gooddepart)
         streams << "good" << endl<< endl;
     else
         streams << "bad" << endl<< endl;
 
-    for ( list<Worker>::iterator i = str.list.begin();
+    for (list<Worker>::const_iterator i = str.list.begin();
         i != str.list.end(); i++) {
         streams << *i;
     }
@@ -147,10 +124,8 @@ ostream & operator <<(ostream & streams, company& str)  {
 }
 
 const bool& company::operator ==(const company& buf) {
-    if (this->name == buf.name && this->gooddepart == buf.gooddepart)
-        return true;
-    else
-        return false;
+        return (this->name == buf.name &&
+        this->gooddepart == buf.gooddepart) ? true : false;
 }
 
 const company& company::operator =(const company& buf) {

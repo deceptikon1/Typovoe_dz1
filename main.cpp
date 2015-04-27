@@ -12,11 +12,11 @@ int main() {
         one.addworker(Worker("Susan", 19, 30000, 1, true));
         one.addworker(Worker("Samuel", 27, 6700, 5, true));
         one.addworker(Worker("Ivan", 30, 6300, 10, true));
-        // one.addworker(Worker("Victor", 27, 6700, 5, true));
+         // one.addworker(Worker("Samuel", 27, 6700, 5, true));
         // - try exeption if you want
 
-        one.delworkernum(3);
-        // one.delworkernum(10);// - try exeption if you want
+        one.delworkernum(2);
+         // one.delworkernum(10);// - try exeption if you want
 
         cout << one;
 
@@ -27,8 +27,8 @@ int main() {
 
         cout << endl << one;
 
-        cout << "Workers number - " << one.getworkersnum()
-             << endl << endl;
+        cout << "Workers number - "<< one.getworkersnum();
+         cout << endl << endl;
 
         cout << Worker("John", 123, 321, 555, true) +
             Worker("Sam", 50, 100, 222, false) +
@@ -38,6 +38,9 @@ int main() {
 
     catch (const exception & msg) {
         cerr << msg.what();
+    }
+    catch (...) {
+        cout << "Unknown excpetion";
     }
     _getch();
 }
