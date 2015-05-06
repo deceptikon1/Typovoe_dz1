@@ -5,36 +5,34 @@
 #include <list>
 #include "./worker.h"
 
-class company {
+class Company {
     std::list < Worker > list;
     string name;
-    bool gooddepart;
-    company *one;
+    bool goodDepart;
 
  public:
-    company();
-    company(const string& name, const bool& gooddepart);
-    company(const company& buf);
+    Company();
+    Company(const string& name, bool goodDepart);
+    Company(const Company& buf);
+    ~Company();
 
-    ~company();
+    void addWorker(const Worker& buf);
 
-    void addworker(const Worker& buf);
+    void delWorker(const Worker& wrk);
+    void delWorkerNum(int i);
 
-    void delworker(const Worker& wrk);
-    void delworkernum(int i);
+    void setCompany(const string& name, bool goodDepart);
+    void setDepartName(const string& name);
+    void setGoodDepart(bool goodDepart);
 
-    void setcompany(const string& name, const bool& gooddepart);
-    void setdepartname(const string& name);
-    void setgooddepart(const bool& gooddepart);
+    int getWorkersNum()const;
+    bool getGoodDepart()const;
+    const string& getDepartName()const;
+    const Worker& getWorker(int i)const;
 
-    int getworkersnum()const;
-    const bool& getgooddepart();
-    const string& getdepartname();
-    const Worker& getworker(int i);
-
-    const bool hasworker(const Worker& wrk);
-    company & operator +(const Worker& buf2);
-    const company& operator =(const company& buf);
-    const bool& operator ==(const company& buf);
-    friend ostream & operator <<(ostream & stream, const company& buf);
+    bool hasWorker(const Worker& wrk)const;
+    const Company operator +(const Worker& buf2)const;
+    const Company& operator =(const Company& buf);
+    bool operator ==(const Company& buf)const;
+    friend ostream& operator <<(ostream& stream, const Company& buf);
 };

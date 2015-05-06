@@ -2,41 +2,33 @@
 #include <string>
 #include "./all.h"
 
-class notfound : public std::exception {
-    string str;
- public:
-    explicit notfound(const Worker & wrk) {
-         str = "Worker : " + wrk.getname() + ", " +
-             to_string(wrk.getage()) +
+
+NotFound::NotFound(const Worker & wrk) {
+         str = "Worker : " + wrk.getName() + ", " +
+             to_string(wrk.getAge()) +
              " years, " + "salary - " +
-             to_string(wrk.getsalary()) +"  NOT FOUND";
+             to_string(wrk.getSalary()) +"  NOT FOUND";
      }
-     const char* what() const throw(){
+     const char* NotFound::what() const throw() {
         return str.c_str();
      }
-};
 
-class exist : public exception {
-    string str;
- public:
-    explicit exist(const Worker & wrk) {
-        str = "Worker : " + wrk.getname() + ", " +
-            to_string(wrk.getage()) +
+
+Exist::Exist(const Worker & wrk) {
+        str = "Worker : " + wrk.getName() + ", " +
+            to_string(wrk.getAge()) +
             " years, " + "salary - " +
-            to_string(wrk.getsalary()) + "  HAVE ALREADY EXIST";
+            to_string(wrk.getSalary()) + "  HAVE ALREADY EXIST";
     }
-    const char* what() const throw(){
+    const char* Exist::what() const throw() {
         return str.c_str();
     }
-};
 
-class numnotfound : public exception {
-    string str;
- public:
-    explicit numnotfound(int i) {
+
+
+NumNotFound::NumNotFound(int i) {
          str = "Worker, who number - " + to_string(i) + " NOT FOUND";
      }
-     const char* what() const throw(){
+    const char* NumNotFound::what() const throw() {
          return str.c_str();
      }
-};

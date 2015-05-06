@@ -8,16 +8,16 @@ Worker::Worker() {
     int age = 0;
     int exp = 0;
     int salary = 0;
-    bool goodworker = false;
+    bool goodWorker = false;
 }
 
 Worker::Worker(const string& name, int age,
-    int exp, int salary, const bool& goodworker) {
+    int exp, int salary, bool goodWorker) {
     this->name = name;
     this->age = age;
     this->exp = exp;
     this->salary = salary;
-    this->goodworker = goodworker;
+    this->goodWorker = goodWorker;
 }
 
 Worker::Worker(const string& name, int age) {
@@ -25,7 +25,7 @@ Worker::Worker(const string& name, int age) {
     this->age = age;
     exp = 0;
     salary = 0;
-    goodworker = false;
+    goodWorker = false;
 }
 
 
@@ -36,66 +36,65 @@ Worker::Worker(const Worker& buf) {
     this->age = buf.age;
     this->exp = buf.exp;
     this->salary = buf.salary;
-    this->goodworker = buf.goodworker;
+    this->goodWorker = buf.goodWorker;
 }
 
-void Worker::setworker(const string& name, int age,
-    int exp, int salary, const bool& goodworker) {
+void Worker::setWorker(const string& name, int age,
+    int exp, int salary, bool goodWorker) {
     this->name = name;
     this->age = age;
     this->exp = exp;
     this->salary = salary;
-    this->goodworker = goodworker;
+    this->goodWorker = goodWorker;
 }
 
-void Worker::setname(const string& name) {
+void Worker::setName(const string& name) {
     this->name = name;
 }
 
-void Worker::setage(int age) {
+void Worker::setAge(int age) {
     this->age = age;
 }
 
-void Worker::setsalary(int salary) {
+void Worker::setSalary(int salary) {
     this->salary = salary;
 }
 
-int Worker::getage()const {
+int Worker::getAge()const {
     return age;
 }
 
-int Worker::getsalary()const {
+int Worker::getSalary()const {
     return salary;
 }
 
-const string& Worker::getname()const {
+const string& Worker::getName()const {
     return name;
 }
 
 const Worker& Worker::operator =(const Worker & buf) {
-    if ((name != buf.name) || (age != buf.age) ||
-        (salary != buf.salary) || (goodworker != buf.goodworker)) {
+    if (this != &buf) {
         name = buf.name;
         age = buf.age;
         salary = buf.salary;
-        goodworker = buf.goodworker;
+        goodWorker = buf.goodWorker;
     }
     return *this;
 }
 
 ostream & operator <<(ostream & stream, const Worker& buf) {
     stream << "Worker " << buf.name << ",age " << buf.age
-    << ",salary " << buf.exp << ",exp " << buf.salary << ",quality ";
-    if (buf.goodworker)
+        << ",salary " << buf.exp << ",exp " << buf.salary << ",quality ";
+    if (buf.goodWorker)
         stream << "good" << endl;
     else
         stream << "bad" << endl;
     return stream;
 }
 
-const bool& Worker::operator ==(const Worker & buf) {
-    return (this->name == buf.name && this->age == buf.age
+bool Worker::operator ==(const Worker & buf)const {
+    return this->name == buf.name && this->age == buf.age
         && this->salary == buf.salary &&
         this->exp == buf.exp &&
-        this->goodworker == buf.goodworker) ? true : false;
+        this->goodWorker == buf.goodWorker;
 }

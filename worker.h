@@ -16,29 +16,29 @@ class Worker {
     int age;
     int salary;
     int exp;
-    bool goodworker;
+    bool goodWorker;
 
  public:
     Worker();
     Worker(const string& name, int age, int salary,
-           int exp, const bool& goodworker);
+        int exp, bool goodWorker);
     Worker(const string& name, int age);
     Worker(const Worker& buf);
 
     ~Worker();
 
-    void setworker(const string& name, int age,
-                   int salary, int exp,
-                   const bool& goodworker);
-    void setname(const string& name);
-    void setage(int age);
-    void setsalary(int salary);
+    void setWorker(const string& name, int age,
+        int salary, int exp,
+        bool goodWorker);
+    void setName(const string& name);
+    void setAge(int age);
+    void setSalary(int salary);
 
-    const string& getname()const;
-    int getage()const;
-    int getsalary()const;
+    const string& getName()const;
+    int getAge()const;
+    int getSalary()const;
 
     friend ostream & operator <<(ostream& stream, const Worker& buf);
     const Worker& operator =(const Worker& buf);
-    const bool& operator==(const Worker& buf);
+    bool operator==(const Worker& buf)const;
 };
